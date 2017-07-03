@@ -9,14 +9,19 @@ let config = {
 
 function generate_username(username) {
     let ts = Math.floor(+ new Date() / 1000);
+    ts += config.ttl;
     return ts + ':' + username;
 }
 
 function generate_password(usercombo, shared_secret) {
     let crypto = require('crypto');
     let hmac = crypto.createHmac('sha1', shared_secret);
-    hmac.update(usercombo);
-    return hmac.digest('hex');
+    hmac.setEncoding('base64');
+    hmac.write(usercombo);
+    hmac.end();
+    return hmac.read();
+    // hmac.update(usercombo);
+    // return new Buffer(hmac.digest('hex')).toString('base64');
 }
 
 function issue_credential() {
