@@ -27,7 +27,7 @@ function generate_password(usercombo, shared_secret) {
 function issue_credential() {
     let response = {};
     response.username = generate_username(config.username);
-    response.password = generate_password(response.username, config.shared_secret);
+    response.credential = generate_password(response.username, config.shared_secret);
     response.ttl = config.ttl;
 
     let uris = [];
