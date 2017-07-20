@@ -7,27 +7,25 @@ let config = {
     shared_secret: '',
 };
 
-function generate_username(username) {
+async function generate_username(username) {
     let ts = Math.floor(+ new Date() / 1000);
     ts += config.ttl;
     return ts + ':' + username;
 }
 
-function generate_password(usercombo, shared_secret) {
+async function generate_password(usercombo, shared_secret) {
     let crypto = require('crypto');
     let hmac = crypto.createHmac('sha1', shared_secret);
     hmac.setEncoding('base64');
     hmac.write(usercombo);
     hmac.end();
     return hmac.read();
-    // hmac.update(usercombo);
-    // return new Buffer(hmac.digest('hex')).toString('base64');
 }
 
-function issue_credential() {
+async function issue_credential() {
     let response = {};
-    response.username = generate_username(config.username);
-    response.credential = generate_password(response.username, config.shared_secret);
+    response.username = await generate_username(config.username);
+    response.credential = await generate_password(response.username, config.shared_secret);
     response.ttl = config.ttl;
 
     let uris = [];
@@ -43,7 +41,7 @@ function issue_credential() {
     return response;
 }
 
-function main(_config) {
+async function main(_config) {
     if (_config.username) {
         config.username = _config.username;
     }
