@@ -1,6 +1,6 @@
 {
   "name": "turn-rest-password",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "module for generate TURN REST API password.",
   "main": "turn-rest-password.js",
   "author": "Jae Hyeon Park",
