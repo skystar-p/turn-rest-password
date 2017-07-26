@@ -36,7 +36,7 @@ async function issue_credential() {
         uris.push('turns:' + config.host + ':' + config.turns_port);
     }
 
-    response.uris = uris;
+    response.urls = uris;
 
     return response;
 }
